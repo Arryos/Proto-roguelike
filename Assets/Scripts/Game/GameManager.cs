@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         TargetDirection();
-        
     }
 
     void TargetDirection()

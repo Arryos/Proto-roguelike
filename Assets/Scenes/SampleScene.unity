@@ -781,7 +781,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 567514995}
-  - component: {fileID: 567514996}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -806,22 +805,6 @@ Transform:
   - {fileID: 157172102}
   m_Father: {fileID: 953011763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &567514996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567514994}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddba08a737bf41c4ba5543e6b92dc3b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  so_Angle: {fileID: 11400000, guid: 728262a8f171ef948b93107ec6bc9fbc, type: 2}
-  X: 0
-  Y: 1
-  Z: 0
 --- !u!1 &615665435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1373,6 +1356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 567514994}
   so_Speed: {fileID: 11400000, guid: e7291c2ac15aa394b96ac1041b6e0d0d, type: 2}
+  so_controlDevice: {fileID: 11400000, guid: 315ab3f66aa539d4fbc780798cfcc7b5, type: 2}
+  so_Angle: {fileID: 0}
   jumpHeight: 2
 --- !u!114 &953011766
 MonoBehaviour:
@@ -1511,6 +1496,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7d5c938e-4198-4867-91be-79cf5f72364c
+    m_ActionName: 'Player/Target[/Mouse/rightButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
