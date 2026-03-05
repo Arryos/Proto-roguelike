@@ -1357,7 +1357,7 @@ MonoBehaviour:
   body: {fileID: 567514994}
   so_Speed: {fileID: 11400000, guid: e7291c2ac15aa394b96ac1041b6e0d0d, type: 2}
   so_controlDevice: {fileID: 11400000, guid: 315ab3f66aa539d4fbc780798cfcc7b5, type: 2}
-  so_Angle: {fileID: 0}
+  so_Angle: {fileID: 11400000, guid: 728262a8f171ef948b93107ec6bc9fbc, type: 2}
   jumpHeight: 2
 --- !u!114 &953011766
 MonoBehaviour:

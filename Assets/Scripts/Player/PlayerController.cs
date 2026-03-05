@@ -24,10 +24,20 @@ public class PlayerController : MonoBehaviour
     private float gravity = -9.8f;
 
     private bool isLookAtCursor = false;
+    private bool isMove = false;
+    private bool LastDirInput = false; // false = move; true = look
 
     private Vector2 moveInput;
     private Vector3 velocity;
     private Vector2 lookInput;
+
+    // Direction Vectors for look/target and move
+    [SerializeField]
+    private Vector2 LookDirection = Vector2.zero;
+    [SerializeField]
+    private Vector2 lastMoveDir = Vector2.zero;
+
+
 
     private InputActionMap actionMap;
 
@@ -73,6 +83,7 @@ public class PlayerController : MonoBehaviour
         {
             if(actionMap.FindAction("Target").IsPressed())
             {
+                isLookAtCursor = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 // ininite horizontal plane at player height
@@ -86,36 +97,55 @@ public class PlayerController : MonoBehaviour
 
                     Vector2 direction = new Vector2(dir.x, dir.z);
 
-                    LastDirection = direction.normalized;
+                    LookDirection = direction.normalized;
 
+                    LastDirInput = true;
                 }
             }
             else
             {
-                // si pas pressed regarder si lastDirection == lastmoveDir
-                if(lastMoveDir != LastDirection)
-                {
-
-                }
+                isLookAtCursor = false;
             }
         }
 
-
-        BodyDirection();
+        if(!isLookAtCursor && isMove) // if just move use LastMoveDir
+        {
+            BodyDirection(lastMoveDir);
+        }
+        else if(!isLookAtCursor && !isMove)  // if target / Look action use LookDirection
+        {
+            if(LastDirInput)
+            {
+                BodyDirection(LookDirection);
+            }
+            else
+            {
+                BodyDirection(lastMoveDir);
+            }
+        }
+        else
+        {
+            BodyDirection(LookDirection);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        isMove = true;
         moveInput = context.ReadValue<Vector2>();
         //Debug.Log($"Move input : {moveInput}");
 
-        if(!isLookAtCursor && moveInput != Vector2.zero)
+        if(moveInput != Vector2.zero)
         {
-            LastDirection = moveInput;
+            lastMoveDir = moveInput;
+            LastDirInput = false;
+        }
+        else
+        {
+            isMove = false;
         }
     }
 
-    private Vector2 LastDirection;
 
     public void OnLook(InputAction.CallbackContext context)
     {
@@ -124,8 +154,9 @@ public class PlayerController : MonoBehaviour
             lookInput = context.ReadValue<Vector2>();
             if (lookInput != Vector2.zero)
             {
-                LastDirection = lookInput;
+                LookDirection = lookInput;
                 isLookAtCursor = true;
+                LastDirInput = true;
             }
             else
             {
@@ -133,7 +164,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    
     private int fireCnt = 0;
 
     public void OnFire(InputAction.CallbackContext context)
@@ -144,27 +175,28 @@ public class PlayerController : MonoBehaviour
         if(fireCnt%3 == 0)
         {
             Debug.Log("End Fire");
-            //isLookAtCursor = false;
+            
             fireCnt = 0;
         }
         else
         {
             Debug.Log("Active  Fire");
-            //isLookAtCursor = true;
         }
     }
 
     private void BodyDirection()
     {
-        //Get angle from lastDirection
-        float targetAngle = Mathf.Atan2(LastDirection.x, LastDirection.y) * Mathf.Rad2Deg;
+        //Get angle from LookDirection
+        float targetAngle = Mathf.Atan2(LookDirection.x, LookDirection.y) * Mathf.Rad2Deg;
 
         body.transform.localRotation = Quaternion.Euler(0f, targetAngle, 0f);
     }
 
-    private void BodyDirection(float angle)
+    private void BodyDirection(Vector2 dir)
     {
-        body.transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+        float targetAngle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+
+        body.transform.localRotation = Quaternion.Euler(0f, targetAngle, 0f);
     }
 
     private void changeSpeed(float p_speed)
@@ -172,15 +204,14 @@ public class PlayerController : MonoBehaviour
         m_speed = p_speed;
     }
 
-    #region mouse/keyboard specifics
+#region mouse/keyboard specifics
 
-    private Vector2 lastMoveDir;
     //test
     private void OnTarget(InputAction.CallbackContext context)
     {
-        Debug.LogWarning("target mouse");
+        //Debug.LogWarning("target mouse");
 
-        lastMoveDir = LastDirection;
+        //lastMoveDir = LookDirection;
     }
 
     private void MouseTarget()
