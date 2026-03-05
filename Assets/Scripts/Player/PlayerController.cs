@@ -37,7 +37,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Vector2 lastMoveDir = Vector2.zero;
 
-
+    [SerializeField]
+    private GameObject targetArrow;
 
     private InputActionMap actionMap;
 
@@ -84,6 +85,7 @@ public class PlayerController : MonoBehaviour
             if(actionMap.FindAction("Target").IsPressed())
             {
                 isLookAtCursor = true;
+                targetArrow.SetActive(true);
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 // ininite horizontal plane at player height
@@ -105,6 +107,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 isLookAtCursor = false;
+                targetArrow.SetActive(false);
             }
         }
 
@@ -157,10 +160,12 @@ public class PlayerController : MonoBehaviour
                 LookDirection = lookInput;
                 isLookAtCursor = true;
                 LastDirInput = true;
+                targetArrow.SetActive(true);
             }
             else
             {
                 isLookAtCursor = false;
+                targetArrow.SetActive(false);
             }
         }
     }
@@ -197,6 +202,8 @@ public class PlayerController : MonoBehaviour
         float targetAngle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
 
         body.transform.localRotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+        so_Angle.Set(targetAngle);
     }
 
     private void changeSpeed(float p_speed)

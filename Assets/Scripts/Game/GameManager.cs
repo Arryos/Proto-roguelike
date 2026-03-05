@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     void TargetDirection()
     {
 
-        if(true)
+        if(false)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

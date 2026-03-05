@@ -25,7 +25,7 @@ public class CursorTraker : MonoBehaviour
     }
 
     //Set rotation to So angle
-    void UpdateArrowDirection(float angle)
+    public void UpdateArrowDirection(float angle)
     {
         if(X)
         {
@@ -37,7 +37,7 @@ public class CursorTraker : MonoBehaviour
         }
         else if(Z)
         {
-            transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+            transform.localRotation = Quaternion.Euler(0f, 0f, -angle);
         }
     }
 }

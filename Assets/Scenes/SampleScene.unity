@@ -1221,7 +1221,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &885984099
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1359,6 +1359,9 @@ MonoBehaviour:
   so_controlDevice: {fileID: 11400000, guid: 315ab3f66aa539d4fbc780798cfcc7b5, type: 2}
   so_Angle: {fileID: 11400000, guid: 728262a8f171ef948b93107ec6bc9fbc, type: 2}
   jumpHeight: 2
+  LookDirection: {x: 0, y: 0}
+  lastMoveDir: {x: 0, y: 0}
+  targetArrow: {fileID: 885984098}
 --- !u!114 &953011766
 MonoBehaviour:
   m_ObjectHideFlags: 0
